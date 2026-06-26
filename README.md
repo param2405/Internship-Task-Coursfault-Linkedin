@@ -1,16 +1,141 @@
-# React + Vite
+# User Analytics Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack user analytics application built as part of the CausalFunnel Full Stack Engineer assignment. The application tracks user interactions on a webpage, stores analytics events in MongoDB, and provides a dashboard to visualize user sessions and click heatmaps.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* Track `page_view` events
+* Track `click` events
+* Persistent session identification using Local Storage
+* Store analytics data in MongoDB
+* REST APIs for analytics data
+* React dashboard for session analytics
+* User journey visualization
+* Click heatmap visualization
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
 
-## Expanding the ESLint configuration
+* React.js
+* JavaScript
+* Axios
+* CSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB
+* Mongoose
+
+## Project Structure
+
+```
+project-root/
+│
+├── client/
+│   ├── src/
+│   ├── public/
+│   └── ...
+│
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   └── server.js
+│
+└── README.md
+```
+
+## Event Schema
+
+Each tracked event contains:
+
+```json
+{
+  "sessionId": "string",
+  "eventType": "page_view | click",
+  "pageUrl": "string",
+  "timestamp": "ISO Date",
+  "coordinates": {
+    "x": 120,
+    "y": 450
+  }
+}
+```
+
+## API Endpoints
+
+### POST `/api/events`
+
+Stores a new analytics event.
+
+### GET `/api/sessions`
+
+Returns all sessions with their event counts.
+
+### GET `/api/sessions/:sessionId`
+
+Returns the ordered list of events for a session.
+
+### GET `/api/heatmap?page=<pageUrl>`
+
+Returns click coordinates for a specific page.
+
+## Setup
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd project-folder
+```
+
+### Backend
+
+```bash
+cd server
+npm install
+npm run dev
+```
+
+### Frontend
+
+```bash
+cd client
+npm install
+npm start
+```
+
+### Environment Variables
+
+Create a `.env` file inside the server directory.
+
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+```
+
+## Assumptions
+
+* Session IDs are stored in Local Storage.
+* Click coordinates are collected only for click events.
+* Events are ordered using their timestamps.
+* MongoDB is used as the primary datastore.
+
+## Future Improvements
+
+* Authentication
+* Real-time analytics using WebSockets
+* Interactive heatmap using Canvas
+* Filtering by date range
+* Device and browser analytics
+* Event batching for improved performance
+* Docker support
+* Unit and integration tests
+
